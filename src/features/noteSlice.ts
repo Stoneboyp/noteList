@@ -11,10 +11,12 @@ export interface Note {
 
 interface NoteState {
     notes: Note[];
+    currentPage: number;
 }
 
 const initialState: NoteState = {
     notes: [],
+    currentPage: 1,
 };
 
 const noteSlice = createSlice({
@@ -27,8 +29,11 @@ const noteSlice = createSlice({
         addNotes: (state, action: PayloadAction<Note>) => {
             state.notes.push(action.payload);
         },
+        setCurrentPage: (state, action: PayloadAction<number>) => {
+            state.currentPage = action.payload;
+        },
     },
 });
 
-export const { setNotes, addNotes } = noteSlice.actions;
+export const { setNotes, addNotes, setCurrentPage } = noteSlice.actions;
 export default noteSlice.reducer;

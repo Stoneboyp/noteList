@@ -9,9 +9,12 @@ interface Props {}
 
 const NoteList: React.FC<Props> = ({}) => {
     const dispatch = useDispatch();
-    const notes = useSelector((state: RootState) => state.note.notes);
-    console.log(notes);
+    const currentPage = useSelector(
+        (state: RootState) => state.note.currentPage
+    );
+    console.log(currentPage);
 
+    const notes = useSelector((state: RootState) => state.note.notes);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -28,7 +31,11 @@ const NoteList: React.FC<Props> = ({}) => {
 
         fetchData();
     }, []);
+    const itemsPerPage = 10;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
 
+    const displayedItems = notes.slice(startIndex, endIndex);
     return (
         <div className="w-4/5">
             <div className="bg-[#474955]  h-[54px] flex justify-between">
@@ -42,7 +49,7 @@ const NoteList: React.FC<Props> = ({}) => {
             {notes && (
                 <table>
                     <tbody>
-                        {notes.map((item: Note) => {
+                        {displayedItems.map((item: Note) => {
                             return (
                                 <tr key={item.id}>
                                     <td>{item.id}</td>
