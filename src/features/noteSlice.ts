@@ -12,11 +12,13 @@ export interface Note {
 interface NoteState {
     notes: Note[];
     currentPage: number;
+    searchQuery: string;
 }
 
 const initialState: NoteState = {
     notes: [],
     currentPage: 1,
+    searchQuery: "",
 };
 
 const noteSlice = createSlice({
@@ -32,8 +34,12 @@ const noteSlice = createSlice({
         setCurrentPage: (state, action: PayloadAction<number>) => {
             state.currentPage = action.payload;
         },
+        setSearchQuery: (state, action: PayloadAction<string>) => {
+            state.searchQuery = action.payload;
+        },
     },
 });
 
-export const { setNotes, addNotes, setCurrentPage } = noteSlice.actions;
+export const { setNotes, addNotes, setCurrentPage, setSearchQuery } =
+    noteSlice.actions;
 export default noteSlice.reducer;

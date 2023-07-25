@@ -1,8 +1,6 @@
-import Pagination from "react-bootstrap/Pagination";
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store"; // Update the path based on your store configuration
+import { RootState } from "../../store";
 import { setCurrentPage } from "../../features/noteSlice";
 
 interface Props {}
@@ -28,19 +26,35 @@ const NotePagging: React.FC<Props> = ({}) => {
     let items = [];
     for (let number = 1; number <= 10; number++) {
         items.push(
-            <Pagination.Item key={number} active={number === currentPage}>
+            <button
+                key={number}
+                onClick={() => dispatch(setCurrentPage(number))}
+                className={`${
+                    number === currentPage ? "text-[#7EBC3C]" : "text-[#474955]"
+                } px-3 py-1  mx-1 cursor-pointer font-bold text-lg`}
+            >
                 {number}
-            </Pagination.Item>
+            </button>
         );
     }
 
     return (
-        <div className="flex justify-between">
-            <button onClick={handlePreviousPage}>Назад</button>
-            <Pagination className="" size="sm">
-                {items}
-            </Pagination>
-            <button onClick={handleNextPage}>Далее</button>
+        <div className="flex justify-between mt-3">
+            <button
+                className="text-[#474955] text-2xl"
+                onClick={handlePreviousPage}
+                disabled={currentPage === 1}
+            >
+                Назад
+            </button>
+            <div>{items}</div>
+            <button
+                className="text-[#474955] text-2xl"
+                onClick={handleNextPage}
+                disabled={currentPage === 10}
+            >
+                Далее
+            </button>
         </div>
     );
 };
